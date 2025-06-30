@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Complaints | HACKLINK TECH.INC</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <%- include('partials/navbar', { user: user }) %>
+  <div class="container">
+    <h1>Submit a Complaint</h1>
+    <% if (typeof submitted !== 'undefined') { %>
+      <div class="notice success">Complaint submitted! We'll get back to you ASAP.</div>
+    <% } %>
+    <form method="POST" action="/complaints">
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Describe your issue..." required></textarea>
+      <button class="btn neon-blue" type="submit">Submit</button>
+    </form>
+    <div style="margin-top:2em;">
+      <strong>Or email us directly:</strong>
+      <a href="mailto:conwaypubg@gmail.com?subject=Complaint">conwaypubg@gmail.com</a>
+    </div>
+  </div>
+</body>
+</html>
