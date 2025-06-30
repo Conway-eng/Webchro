@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | HACKLINK TECH.INC</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="auth-container">
+    <h1>Register</h1>
+    <% if (error) { %>
+      <div class="notice error"><%= error %></div>
+    <% } %>
+    <form method="POST" action="/register">
+      <input name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input name="email" type="email" placeholder="Email (optional)">
+      <button class="btn neon-green" type="submit">Register</button>
+    </form>
+    <p>
+      <a href="/login">Already have an account? Login</a>
+    </p>
+  </div>
+</body>
+</html>
