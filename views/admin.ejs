@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel | HACKLINK TECH.INC</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <%- include('partials/navbar', { user: user }) %>
+  <div class="container">
+    <h1>Admin Panel</h1>
+    <h2>Users</h2>
+    <table>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Coins</th>
+        <th>Referrals</th>
+        <th>Referred By</th>
+        <th>Manage Coins</th>
+      </tr>
+      <% users.forEach(u => { %>
+        <tr>
+          <td><%= u.username %></td>
+          <td><%= u.email %></td>
+          <td><%= u.coins %></td>
+          <td><%= u.referrals %></td>
+          <td><%= u.referredBy %></td>
+          <td>
+            <form method="POST" action="/admin/set-coins" style="display:inline;">
+              <input type="hidden" name="username" value="<%= u.username %>">
+              <input type="number" name="amount" min="0" value="<%= u.coins %>" style="width:60px;">
+              <button class="btn neon-green" type="submit">Set</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+    <form method="POST" action="/admin/reset-coins" style="margin-top:1em;">
+      <button class="btn neon-blue" type="submit">Reset All Coins</button>
+    </form>
+    <h2 style="margin-top:2em;">Bots</h2>
+    <form method="POST" action="/admin/add-bot" class="bot-form">
+      <input name="botName" placeholder="Bot Name" required>
+      <input name="botDesc" placeholder="Description" required>
+      <input name="botEnv" placeholder="Environment Variables" required>
+      <button class="btn neon-green" type="submit">Add Bot</button>
+    </form>
+    <ul>
+      <% bots.forEach(bot => { %>
+        <li>
+          <strong><%= bot.name %></strong> - <%= bot.description %>
+          <span class="env">[Env: <%= bot.env %>]</span>
+          <button class="btn neon-blue" disabled>Deploy Bot</button>
+        </li>
+      <% }) %>
+    </ul>
+    <h2 style="margin-top:2em;">Complaints</h2>
+    <ul>
+      <% complaints.forEach(c => { %>
+        <li>
+          <strong><%= c.email %></strong>: <%= c.message %> <span>(<%= c.date.toLocaleString() %>)</span>
+        </li>
+      <% }) %>
+    </ul>
+    <div class="wallet" style="margin-top:2em;">
+      <span class="label">Total Coins in System:</span>
+      <span class="coins"><%= totalCoins %></span>
+    </div>
+  </div>
+</body>
+</html>
