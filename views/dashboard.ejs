@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | HACKLINK TECH.INC</title>
+  <link rel="stylesheet" href="/style.css">
+  <script defer src="/dashboard.js"></script>
+</head>
+<body>
+  <%- include('partials/navbar', { user: user }) %>
+  <div class="container">
+    <h1>Welcome, <%= user.username %>!</h1>
+    <div class="wallet">
+      <span class="label">Wallet Balance:</span>
+      <span class="coins"><%= user.coins %> coins</span>
+    </div>
+    <div class="countdown-section">
+      <span id="countdown"></span>
+      <form id="claimForm" method="POST" action="/claim-coins" style="display:none;">
+        <a class="btn neon-green" id="whatsappBtn" href="<%= whatsappLink %>" target="_blank" style="display:none;">
+          ✅ I’ve joined the WhatsApp Channel
+        </a>
+        <button class="btn neon-blue" type="submit" id="claimBtn" style="display:none;">Claim Daily 10 Coins</button>
+      </form>
+      <% if (claimedToday) { %>
+        <div class="notice">You have claimed your daily coins. Come back tomorrow!</div>
+      <% } %>
+    </div>
+    <div class="referral">
+      <h3>Your Referral Code: <span class="refcode"><%= referralCode %></span></h3>
+      <form method="POST" action="/submit-referral">
+        <input type="email" name="referredEmail" placeholder="Referred user's email" required>
+        <button class="btn neon-blue" type="submit">Submit Referral (+10 coins)</button>
+      </form>
+    </div>
+    <div class="transfer">
+      <h3>Transfer Coins</h3>
+      <form method="POST" action="/transfer-coins">
+        <input type="email" name="recipientEmail" placeholder="Recipient's Email" required>
+        <input type="number" name="coinAmount" min="1" placeholder="Amount" required>
+        <button class="btn neon-green" type="submit">Transfer</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    let countdown = <%= countdown %>;
+    let claimedToday = <%= claimedToday ? "true" : "false" %>;
+  </script>
+</body>
+</html>
